@@ -3,10 +3,12 @@ import React from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
+
 const SearchBar = () => {
   return (
     <View style={{ marginTop: 15, flexDirection: "row" }}>
       <GooglePlacesAutocomplete
+      query={{key: 'AIzaSyBj8dEW1SLxKTnf_Z-0O4KOxkV9Sn0wcR8'}}
         placeholder="Search"
         styles={{
           textInputContainer: {
