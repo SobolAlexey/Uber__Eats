@@ -5,13 +5,12 @@ import MaterialComunityIcons from "react-native-vector-icons/Ionicons";
 
 export const localRestaurants = [
     {
-        name: "Turtle Bay Sea Food Restaurant",
-        image_url:
-         "https://media-cdn.tripadvisor.com/media/photo-s/15/9e/05/d1/grilled-prawn.jpg",
-        categories: ['Cafe', 'Bar'],
-        price: '$$',
-        reviews: 1244,
-        rating: 4.5,
+      name: "Turtle Bay Sea Food Restaurant",
+      image_url: "https://media-cdn.tripadvisor.com/media/photo-s/15/9e/05/d1/grilled-prawn.jpg",
+      reviews: "1500",
+      price: "$$",
+      rating: "4.5",
+      categories: [{title: "Thai"}, {title: "Comfort Food"}]
     },
     {
         name: "Любовь Пирогова",
@@ -20,7 +19,8 @@ export const localRestaurants = [
         categories: ['Cafe', 'Bar'],
         price: '$$-$$$',
         reviews: 1044,
-        rating: 3.5,
+        rating: '3.5',
+        categories: [{title: "Thai"}, {title: "Comfort Food"}]
     },
     {
         name: "Tomorrow",
@@ -29,7 +29,8 @@ export const localRestaurants = [
         categories: ['Cafe', 'Bar'],
         price: '$$$',
         reviews: 1944,
-        rating: 4,
+        rating: '4',
+        categories: [{title: "Thai"}, {title: "Comfort Food"}]
     },
     {
         name: "Индрик",
@@ -38,7 +39,8 @@ export const localRestaurants = [
         categories: ['Cafe', 'Bar'],
         price: '$$$$',
         reviews: 1544,
-        rating: 4.6,
+        rating: '4.6',
+        categories: [{title: "Thai"}, {title: "Comfort Food"}]
     },
     {
         name: "Memo",
@@ -47,15 +49,28 @@ export const localRestaurants = [
         categories: ['Cafe', 'Bar'],
         price: '$$$',
         reviews: 2244,
-        rating: 4.9,
+        rating: '4.9',
+        categories: [{title: "Thai"}, {title: "Comfort Food"}]
     },
 ]
-const RestaurantItems = ({restaurantData}) => {
+const RestaurantItems = ({navigation, restaurantData}) => {
   return (
-    <TouchableOpacity activeOpacity={1} style={{ marginBottom: 30 }}>
+    <>
     {restaurantData.map((restaurant, index) => (
+      <TouchableOpacity
+       key={index}
+       activeOpacity={1}
+        style={{ marginBottom: 30 }}
+        onPress={() => navigation.navigate("RestaurantDetail", {
+          name: restaurant.name,
+          image: restaurant.image_url,
+          price: restaurant.price,
+          reviews: restaurant.reviews_count,
+          rating: restaurant.rating,
+          categories: restaurant.categories,
+        })}
+        >
       <View
-        key={index}
         style={{
           marginTop: 10,
           padding: 15,
@@ -65,9 +80,9 @@ const RestaurantItems = ({restaurantData}) => {
         <RestauranImage image={restaurant.image_url} />
         <RestauranInfo name={restaurant.name} rating={restaurant.rating}/>
       </View>
+      </TouchableOpacity>
     ))}
-      
-    </TouchableOpacity>
+    </>
   );
 };
 
