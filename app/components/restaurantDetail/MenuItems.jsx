@@ -2,36 +2,9 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import { Image } from "react-native";
 import { Divider } from "react-native-elements";
-const foods = [
-  {
-    title: "Lasagna",
-    description: "With butter lettuce, tomato and sauco",
-    price: "$13.56",
-    image:
-      "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg",
-  },
-  {
-    title: "Lasagna",
-    description: "With butter lettuce, tomato and sauco",
-    price: "$13.56",
-    image:
-      "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg",
-  },
-  {
-    title: "Lasagna",
-    description: "With butter lettuce, tomato and sauco",
-    price: "$13.56",
-    image:
-      "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg",
-  },
-  {
-    title: "Lasagna",
-    description: "With butter lettuce, tomato and sauco",
-    price: "$13.56",
-    image:
-      "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg",
-  },
-];
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const styles = StyleSheet.create({
   menuItemsStyle: {
@@ -45,20 +18,46 @@ const styles = StyleSheet.create({
   },
 });
 
-const MenuItems = () => {
+const MenuItems = ({ restaurantName, foods }) => {
+  const dispatch = useDispatch();
+
+  const selectItem = (item, checkboxValue) =>
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: {
+        ...item,
+        restaurantName: restaurantName,
+        checkboxValue: checkboxValue,
+      },
+    });
+
+  const cartItems = useSelector(
+    (state) => state.cartReducer.selectedItems.items
+  );
+
+  const isFoodInCart = (food, cartItems) => {
+    Boolean(cartItems.find((item) => item.title === food.title));
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {foods.map((food, index) => (
         <View key={index}>
           <View style={styles.menuItemsStyle}>
+            <BouncyCheckbox
+              iconStyle={{ borderColor: "lightgray", borderRadius: 0 }}
+              fillColor="green"
+              isChecked={isFoodInCart(food, cartItems)}
+              onPress={(checkboxValue) => selectItem(food, checkboxValue)}
+            />
             <FoodInfo food={food} />
             <FoodImage food={food} />
           </View>
-          <Divider 
-          width={0.5}
-           orientation='vertical'
-           style={{ marginHorizontal: 20}}
-            />
+          <Divider
+            width={0.5}
+            orientation="vertical"
+            style={{ marginHorizontal: 20 }}
+          />
         </View>
       ))}
     </ScrollView>
