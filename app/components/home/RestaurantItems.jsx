@@ -65,7 +65,7 @@ const RestaurantItems = ({navigation, restaurantData}) => {
           name: restaurant.name,
           image: restaurant.image_url,
           price: restaurant.price,
-          reviews: restaurant.reviews_count,
+          reviews: restaurant.reviews,
           rating: restaurant.rating,
           categories: restaurant.categories,
         })}
